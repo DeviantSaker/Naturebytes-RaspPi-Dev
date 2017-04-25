@@ -32,22 +32,24 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(sensorPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 # GPIO.setup(lowbattPin, GPIO.IN)
 
-# Set default save location
-saveLocation = "/media/usb0/"
 
-def main(argv):
+def main():
     # Set save location
     try:
-        opts, args = getopt.getopt(argv, "ho:")
+        opts, args = getopt.getopt(sys.argv[1:], "ho:")
         for opt, arg in opts:
             if opt == "-h":
                 print "nbcamera.py -o <outputlocation>"
-                sys.exit()
+                sys.exit(2)
             elif opt == "-o":
                 saveLocation = arg
-    except getopt.GetoptError:
-        print "nbcamera.py -o <outputlocation>"
-        sys.exit(2)
+    except getopt.GetoptError as e:
+        print e.message()
+        sys.exit()
+    except IndexError:
+        saveLocation = "/media/usb0/"
+        
+    logging.info('Using output location {0}.'.format(saveLocation))
 
     # Defining our default states so we can detect a change
 
@@ -102,7 +104,7 @@ def main(argv):
                 # print 'perms ' +perms
 
                 # Log that we have just taking a photo"
-                logging.info('About to take a photo and save to the USB drive')
+                logging.info('About to take a photo and save to {0}.'.format(saveLocation))
                 call ([cmd], shell=True)
                 # call ([perms], shell=True)
 
@@ -137,4 +139,4 @@ def main(argv):
                logging.info('Waiting for a new PIR trigger to continue')
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
