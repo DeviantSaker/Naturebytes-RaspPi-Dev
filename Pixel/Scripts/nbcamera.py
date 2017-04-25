@@ -136,5 +136,5 @@ def main(argv):
                # print "Waiting for a new PIR trigger to continue"
                logging.info('Waiting for a new PIR trigger to continue')
 
-if __name__ == "main":
+if __name__ == "__main__":
     main(sys.argv[1:])
