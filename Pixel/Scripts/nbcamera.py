@@ -94,7 +94,7 @@ def main(argv):
                 photo = get_date + '_' +  get_time + '.jpg'
 
                 # Using the raspistill library to take a photo. You can show that a photo has been taken in a small preview box on the desktop by changing --nopreview to --preview
-                cmd = 'raspistill -t 300 -w 1920 -h 1440 --nopreview -o ' + photo
+                cmd = 'raspistill -t 300 -w 1920 -h 1440 --nopreview -o ' + saveLocation + photo
                 print 'cmd ' +cmd
 
                 # If you find you have permission problems saving to other attached non-Naturebytes storage devices you can use this line to change the owner of the photo if required
@@ -108,7 +108,7 @@ def main(argv):
 
                 # Log that a photo was taken successfully and state the file name so we know which one"
                 logging.info('Photo taken successfully %(show_photo_name)s', { 'show_photo_name': photo })
-                photo_location =  '/media/usb0/' + photo
+                photo_location =  saveLocation + photo
 
                 # Log that we are about to attempt to write the overlay text. This was removed in v1.07 to speed up the capture process."
                 logging.info('Skipping legacy overlay text')
